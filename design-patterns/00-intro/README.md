@@ -26,6 +26,13 @@ We can't go to web and copy a design into your program with the same way you cop
 (like Math.random()). Pattern is not code is a concept for solving particular problem, you must follow
 pattern concept and implement solution that match the logic of you program.
 
+**Notes:**
+
+However, if you never encounter these problems, knowing patterns is still useful because it teaches you
+how to solve all sorts of problems using principles of object-oriented design.
+
+Design patterns define a common language that you and your teammates can use to communicate more efficiently.
+
 **Example problems:**
 
 - How do we create objects without tightly coupling our code?
@@ -58,8 +65,10 @@ resolving solution for a problem, to answer really fast **"do not choose a patte
 
 ### How to choose a design pattern:
 
-Ask these questions ⁉️:
+**Ask these questions ⁉️:**
 
+- **What am I trying to achieve?**
+- **Where is the complexity or bottleneck?**
 - **What is changing a lot?**
     - If behavior changes often, a pattern like **Strategy, Observer or Command** may help.
 - **What is getting messy?**
@@ -70,6 +79,21 @@ Ask these questions ⁉️:
     - That often suggests **Observer**.
 - **Do I need to add steps without changing the main flow?**
     - That often suggests Chain of Responsibility.
+
+#### A practical way to choose is to ask:
+
+- Is the behavior changing?
+- Is the creation changing?
+- Is the structure changing?
+- Is the interaction changing?
+
+#### Use Pattern when you see:
+
+- Lots of if/else or switch for similar behavior
+- Duplicated creation code
+- Tight coupling between classes
+- Adding a new feature requires editing many files
+- The same object should behave differently in different contexts
 
 ### How to know if it is the best pattern
 
