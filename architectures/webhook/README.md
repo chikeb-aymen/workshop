@@ -8,6 +8,7 @@ Notify **external subscribers** about events happening inside your system by sen
 pre-registered URL → the moment the event occurs → without the producer knowing anything about the consumer's internal
 logic, technology, or how many consumers exist.
 In practice: **"don't call us, we'll call you"** → at the HTTP level.
+
 ---
 
 ## 2. Why it exists (the real pain)
@@ -29,6 +30,7 @@ The naive approach is to hard-code calls to each partner's API inside `PaymentSe
 Your system fires an HTTP POST to every URL registered for a given event type. The POST carries a signed JSON payload
 describing what happened. Subscribers process it independently and asynchronously. New subscribers self-register via
 an API → the producer's core logic never changes.
+
 ---
 
 ## 4. Structure (roles)
@@ -85,6 +87,8 @@ Use Webhooks when:
 - **Secret rotation is operational overhead:** rotating the shared HMAC key requires coordination between producer and
   consumer.
 
+---
+
 ## 7. Mapping to this workshop
 
 | Folder            | What to study                                                                                     |
@@ -110,6 +114,7 @@ Use Webhooks when:
 
 For GitHub + CircleCI specifically: CircleCI receives GitHub’s repository webhooks (or you configure a relay). The
 important architectural split is unchanged: **push notification** (webhook) vs **status reporting** (REST callback).
+
 ---
 
 ## 9. Problem statement
