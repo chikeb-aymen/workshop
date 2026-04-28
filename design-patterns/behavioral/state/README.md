@@ -4,7 +4,8 @@
 
 ## 1. Intent
 
-Allow an object to **alter its behavior** when its **internal state** changes. The object will appear to change its class.
+Allow an object to **alter its behavior** when its **internal state** changes. The object will appear to change its
+class.
 
 The pattern is also known as **Objects for States**
 
@@ -16,11 +17,11 @@ When behavior depends heavily on **where an object is in a lifecycle** (open, li
 often devolves into **the same state variable** checked in **many** methods:
 
 ```java
-switch (phase) {
-    case CLOSED: ...
-    case LISTEN: ...
-    case ESTABLISHED: ...
-}
+switch(phase){
+        case CLOSED:...
+        case LISTEN:...
+        case ESTABLISHED:...
+        }
 ```
 
 That repeats in `open`, `send`, `close`, `transmit`, and so on. Adding a phase or changing a transition means **editing
@@ -44,6 +45,12 @@ concrete states. Shared stateless state objects act like **flyweights** (one ins
 ---
 
 ## 4. Pattern structure
+
+###### Figure is from the design pattern book.
+
+<p align="center">
+  <img src="diagram/state_structure.png" alt="State pattern structure" />
+</p>
 
 | Role              | Responsibility                                                                                    |
 |-------------------|---------------------------------------------------------------------------------------------------|
@@ -92,7 +99,8 @@ can look similar (context + abstract operation + concrete implementations). The 
 | **Operations on the abstraction**    | Often **one** main method (e.g. `pay`, `compare`) or a small, stable set.                    | Often **many** operations on the context, each with different **per-state** behavior (some no-ops).                    |
 | **Concrete classes know each other** | Strategies ideally **do not** depend on sibling strategies.                                  | Concrete states **often** know **successor** states to express allowed transitions.                                    |
 
-**Rule of thumb:** If the object’s “mode” is really a **lifecycle** with rules like “from A only X leads to B,” **State**
+**Rule of thumb:** If the object’s “mode” is really a **lifecycle** with rules like “from A only X leads to B,” **State
+**
 fits well. If you only need to **plug in** a swappable algorithm and the object does not own a rich internal phase
 graph, **Strategy** is usually the clearer name.
 
