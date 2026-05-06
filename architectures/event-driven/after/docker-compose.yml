@@ -1,0 +1,60 @@
+version: "3.9"
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"     # AMQP
+      - "15672:15672"   # Management UI (guest/guest)
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:userdb
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  email-service:
+    build: ./email-service
+    container_name: email-service
+    ports:
+      - "8082:8080"
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:emaildb
+      USER_SERVICE_BASE_URL: http://user-service:8080
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      user-service:
+        condition: service_started
+
+  analytics-service:
+    build: ./analytics-service
+    container_name: analytics-service
+    ports:
+      - "8083:8080"
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:analyticsdb
+      USER_SERVICE_BASE_URL: http://user-service:8080
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      user-service:
+        condition: service_started
